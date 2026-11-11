@@ -1,0 +1,7 @@
+sku,nombre,categoria,precio,stock,proveedor
+BEV-001,Café molido 1 kg,Bebidas,"$255.00",25,Proveedor Norte
+BEV-001,cafe MOLIDO 1 KG,cafe,"$245.00",30,Proveedor Sur
+ALI-001,Galletas de avena,Snacks,"$27.00",35,Proveedor Sur
+IMP-2001,Agua de coco 1 L,Bebidas,"$45.00",12,Proveedor Nuevo
+IMP-2002,Alimento para perro 3 kg,Mascotas,"USD 18.50",8,Proveedor Norte
+IMP-2003,Producto sin precio,Otros,,5,Proveedor Sur

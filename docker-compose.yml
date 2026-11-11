@@ -1,0 +1,38 @@
+# Plantilla no ejecutada en esta máquina (Docker no está instalado).
+# Cambia POSTGRES_PASSWORD en .env antes de usar.
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-agente_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cambiar}
+      POSTGRES_DB: ${POSTGRES_DB:-agente}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-agente_app} -d ${POSTGRES_DB:-agente}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-agente_app}:${POSTGRES_PASSWORD:-cambiar}@db:5432/${POSTGRES_DB:-agente}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET:-}
+      LLM_MODEL: mock
+      AGENT_MAX_STEPS: "6"
+    command: >
+      sh -c "python scripts/migrate.py &&
+             python scripts/seed.py &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:

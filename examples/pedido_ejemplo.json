@@ -1,0 +1,8 @@
+{
+  "cliente_email": "laura@example.com",
+  "items": [
+    {"sku": "BEV-001", "cantidad": 2},
+    {"sku": "ALI-001", "cantidad": 1}
+  ],
+  "idempotency_key": "demo-pedido-001"
+}
